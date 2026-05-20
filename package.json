@@ -32,7 +32,7 @@
     "dummy:show": "node ./scripts/show-dummy-account.cjs"
   },
   "dependencies": {
-    "@implementsprint/sdk": "^1.1.2",
+    "@implementsprint/sdk": "^1.2.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
