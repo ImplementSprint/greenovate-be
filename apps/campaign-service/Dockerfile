@@ -16,6 +16,7 @@ WORKDIR /app
 COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/dist ./dist
 
+USER node
 ENV NODE_ENV=production
 ENV SCM_CAMPAIGN_PORT=3014
 EXPOSE 3014

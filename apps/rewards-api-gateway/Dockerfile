@@ -16,6 +16,7 @@ WORKDIR /app
 COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/dist ./dist
 
+USER node
 ENV NODE_ENV=production
 ENV SCM_GATEWAY_PORT=3011
 EXPOSE 3011

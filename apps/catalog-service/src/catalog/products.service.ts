@@ -73,7 +73,7 @@ export class ProductsService {
   private async fetchCatalogProducts(): Promise<Product[]> {
     const now = Date.now();
     if (this.catalogCache && this.catalogCache.expiresAt > now) return this.catalogCache.products;
-    if (this.catalogFetchPromise) return this.catalogFetchPromise;
+    if (this.catalogFetchPromise !== null) return this.catalogFetchPromise;
     this.catalogFetchPromise = this.loadCatalogProducts();
     try {
       const products = await this.catalogFetchPromise;

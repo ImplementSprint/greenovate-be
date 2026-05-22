@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TransactionController } from './transaction.controller';
 import { TransactionService } from './transaction.service';
+import { ApiCenterService } from './api-center.service';
 import { SupabaseService } from '../supabase.service';
 import { RabbitMQService } from '../rabbitmq.service';
 import { InternalServerErrorException, NotFoundException, BadRequestException } from '@nestjs/common';
@@ -32,6 +33,12 @@ describe('TransactionController (Unit)', () => {
           provide: RabbitMQService,
           useValue: {
             publishTransactionCompleted: jest.fn(),
+          },
+        },
+        {
+          provide: ApiCenterService,
+          useValue: {
+            isConfigured: jest.fn().mockReturnValue(false),
           },
         },
       ],
