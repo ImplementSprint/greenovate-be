@@ -5,8 +5,9 @@ WORKDIR /usr/src/app
 COPY package*.json .npmrc ./
 RUN npm install
 
-COPY . .
+COPY --chown=node:node . .
 RUN npm run build
 
+USER node
 EXPOSE 4006
 CMD ["npm", "run", "start:prod"]

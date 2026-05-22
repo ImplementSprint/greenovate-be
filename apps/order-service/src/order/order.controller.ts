@@ -353,8 +353,8 @@ export class OrderController {
       // ── Generate association rules and filter for productId in antecedent ────
       const supportMap = new Map<string, number>();
       for (const fi of frequentItemsets)
-        supportMap.set([...fi.items].sort().join('||'), fi.support);
-      const getSupport = (items: string[]) => supportMap.get([...items].sort().join('||')) ?? 0;
+        supportMap.set([...fi.items].sort((a, b) => a.localeCompare(b)).join('||'), fi.support);
+      const getSupport = (items: string[]) => supportMap.get([...items].sort((a, b) => a.localeCompare(b)).join('||')) ?? 0;
 
       const properSubsets = (arr: string[]): string[][] => {
         const subs: string[][] = [];

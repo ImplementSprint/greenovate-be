@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY --chown=node:node . .
 RUN npm run build
 
 EXPOSE 4104

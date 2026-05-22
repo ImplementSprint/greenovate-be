@@ -2,7 +2,8 @@ FROM node:20-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev || npm install --omit=dev
-COPY . .
+COPY --chown=node:node . .
+USER node
 ENV NODE_ENV=production
 EXPOSE 4009
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
