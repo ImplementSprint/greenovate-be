@@ -71,3 +71,10 @@ docker/data/
 
 # Documentation / Markdown files
 *.md
+
+# Temp clone (nested repo, not part of this project)
+temp_clone/
+
+# One-off fix scripts
+fix-dockerfiles.js
+fix-regex.js

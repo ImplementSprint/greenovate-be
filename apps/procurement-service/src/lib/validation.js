@@ -64,7 +64,7 @@ export const validatePurchaseOrderPayload = (
   if (partial) {
     return Object.fromEntries(
       Object.entries(normalized).filter(([key, value]) => {
-        return key in payload && value !== undefined;
+        return key in payload && payload[key] !== undefined;
       }),
     );
   }

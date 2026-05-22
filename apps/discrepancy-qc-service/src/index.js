@@ -34,7 +34,7 @@ app.get("/health", async (_req, res) => {
     database: {
       connected: database.connected,
       configured: hasDatabaseConfig,
-      message: database.message ? database.message.replace(/:.*@/, ":****@") : null,
+      message: database.message ? database.message.replace(/:[^@]*@/, ":****@") : null,
     },
   });
 });

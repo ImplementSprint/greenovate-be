@@ -114,7 +114,7 @@ export class ReportingController {
       // Count pairs
       for (let i = 0; i < uniqueItems.length; i++) {
         for (let j = i + 1; j < uniqueItems.length; j++) {
-          const pair = [uniqueItems[i], uniqueItems[j]].sort().join('||');
+          const pair = [uniqueItems[i], uniqueItems[j]].sort((a, b) => a.localeCompare(b)).join('||');
           pairFrequencies[pair] = (pairFrequencies[pair] || 0) + 1;
         }
       }
