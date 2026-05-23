@@ -6,7 +6,7 @@ import { ProxyMiddleware, ProtectedProxyMiddleware, FrontendProxyMiddleware } fr
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
-  controllers: [AppController],
+  controllers: [AppController, StaticController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
