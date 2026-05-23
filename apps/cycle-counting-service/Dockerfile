@@ -1,8 +1,8 @@
 FROM node:20-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev || npm install --omit=dev
-COPY --chown=node:node . .
+COPY --chmod=0755 package*.json ./
+RUN npm ci --ignore-scripts --omit=dev || npm install --ignore-scripts --omit=dev
+COPY --chmod=0755 --chown=node:node . .
 USER node
 ENV NODE_ENV=production
 EXPOSE 4009
