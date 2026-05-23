@@ -2,10 +2,10 @@
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-RUN npm install
+COPY --chmod=0755 package*.json ./
+RUN npm install --ignore-scripts
 
-COPY --chown=node:node . .
+COPY --chmod=0755 --chown=node:node . .
 RUN npm run build
 
 EXPOSE 4000
