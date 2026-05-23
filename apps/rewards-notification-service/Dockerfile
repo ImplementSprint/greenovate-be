@@ -3,18 +3,18 @@
 FROM node:22-slim AS base
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm install --production=false
+COPY --chmod=0755 package.json package-lock.json* ./
+RUN npm install --ignore-scripts --production=false
 
-COPY tsconfig.json ./tsconfig.json
-COPY src ./src
+COPY --chmod=0755 tsconfig.json ./tsconfig.json
+COPY --chmod=0755 src ./src
 
 RUN npm run build
 
 FROM node:22-slim AS runner
 WORKDIR /app
-COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/dist ./dist
+COPY --chmod=0755 --from=base /app/node_modules ./node_modules
+COPY --chmod=0755 --from=base /app/dist ./dist
 
 USER node
 ENV NODE_ENV=production

@@ -1,17 +1,17 @@
 # Builder stage
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY --chown=node:node . .
+COPY --chmod=0755 package*.json ./
+RUN npm install --ignore-scripts
+COPY --chmod=0755 --chown=node:node . .
 RUN npm run build
 
 # Runner stage
 FROM node:20-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev || npm install --omit=dev
-COPY --from=builder /app/dist ./dist
+COPY --chmod=0755 package*.json ./
+RUN npm ci --ignore-scripts --omit=dev || npm install --ignore-scripts --omit=dev
+COPY --chmod=0755 --from=builder /app/dist ./dist
 USER node
 ENV NODE_ENV=production
 EXPOSE 3001
