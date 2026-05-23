@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="0" failures="0" errors="0" time="0.002">
+<testsuites name="jest tests" tests="5" failures="0" errors="0" time="2.1">
+  <testsuite name="LocationController" errors="0" failures="0" skipped="0" timestamp="2026-05-22T19:04:25" time="1.707" tests="5">
+    <testcase classname="LocationController should be defined" name="LocationController should be defined" time="0.008">
+    </testcase>
+    <testcase classname="LocationController resolve should call geoReverseGeocode via service and return address info" name="LocationController resolve should call geoReverseGeocode via service and return address info" time="0.002">
+    </testcase>
+    <testcase classname="LocationController resolve should reject missing coordinates" name="LocationController resolve should reject missing coordinates" time="0.007">
+    </testcase>
+    <testcase classname="LocationController checkFence should call geoFenceCheck via service and return inside status" name="LocationController checkFence should call geoFenceCheck via service and return inside status" time="0.001">
+    </testcase>
+    <testcase classname="LocationController checkFence should handle request without fenceId gracefully" name="LocationController checkFence should handle request without fenceId gracefully" time="0.002">
+    </testcase>
+  </testsuite>
 </testsuites>
