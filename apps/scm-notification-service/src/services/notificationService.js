@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 import { createHttpError } from "../lib/http.js";
 
 export const sendNotification = async (payload) => {
@@ -7,16 +8,16 @@ export const sendNotification = async (payload) => {
     throw createHttpError(400, "Missing required fields: type, to, body");
   }
 
-  console.log(`[NotificationService] Sending ${type} to ${to}...`);
-  console.log(`[NotificationService] Subject: ${subject || "N/A"}`);
-  console.log(`[NotificationService] Body: ${body}`);
+  console.log(`[NotificationService] Sending ${encodeURIComponent(type)} to ${encodeURIComponent(to)}...`);
+  console.log(`[NotificationService] Subject: ${encodeURIComponent(subject || "N/A")}`);
+  console.log(`[NotificationService] Body: ${encodeURIComponent(body)}`);
 
   // Simulation of sending
   await new Promise((resolve) => setTimeout(resolve, 100));
 
   return {
     success: true,
-    messageId: `msg_${Math.random().toString(36).substr(2, 9)}`,
+    messageId: `msg_${crypto.randomBytes(5).toString('hex')}`,
     timestamp: new Date().toISOString(),
     type,
     to,

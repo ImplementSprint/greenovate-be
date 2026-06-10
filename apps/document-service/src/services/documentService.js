@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 import { createHttpError } from "../lib/http.js";
 
 export const uploadDocument = async (payload) => {
@@ -7,13 +8,13 @@ export const uploadDocument = async (payload) => {
     throw createHttpError(400, "Missing required fields: fileName, content");
   }
 
-  console.log(`[DocumentService] Uploading document: ${fileName} (${mimeType || "unknown"})...`);
+  console.log(`[DocumentService] Uploading document: ${encodeURIComponent(fileName)} (${encodeURIComponent(mimeType || "unknown")})...`);
 
   // Simulation
   await new Promise((resolve) => setTimeout(resolve, 150));
 
   return {
-    documentId: `doc_${Math.random().toString(36).substr(2, 9)}`,
+    documentId: `doc_${crypto.randomBytes(5).toString('hex')}`,
     fileName,
     url: `https://storage.example.com/docs/${fileName}`,
     uploadedAt: new Date().toISOString(),

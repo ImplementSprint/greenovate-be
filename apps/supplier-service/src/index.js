@@ -7,6 +7,7 @@ import { scorecardJobsRouter } from "./routes/scorecardJobs.js";
 import { startMonthlyScorecardScheduler } from "./lib/scheduler.js";
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use(express.json());
 
@@ -32,7 +33,7 @@ app.get("/health", async (_req, res) => {
     database: {
       connected: database.connected,
       configured: hasDatabaseConfig,
-      message: database.message ? database.message.replace(/:[^@]*@/, ":****@") : null,
+      message: database.message ? database.message.replace(/:[^@]{0,100}@/, ":****@") : null,
     },
   });
 });

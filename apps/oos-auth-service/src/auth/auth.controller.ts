@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import {
   BadRequestException, Body, Controller, Delete, Get, Headers,
   InternalServerErrorException, NotFoundException, Param, Patch, Post,
@@ -146,7 +147,7 @@ export class AuthController {
       if (checkError && checkError.code !== 'PGRST116') throw checkError;
       const jwtSecret = process.env.JWT_SECRET || 'your-secret-key';
       if (!verificationCode || !registrationToken) {
-        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        const code = crypto.randomInt(100000, 999999).toString();
         const hashedPassword = await bcrypt.hash(password, 10);
         const nextRegistrationToken = jwt.sign({ full_name: fullName, email, phone: normalizedPhone, birthday, gender, password: hashedPassword, code, purpose: 'register' }, jwtSecret, { expiresIn: '10m' });
         await this.mailerService.sendRegistrationCodeEmail(email, code);
@@ -279,7 +280,7 @@ export class AuthController {
         }
       }
 
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const code = crypto.randomInt(100000, 999999).toString();
       const resetToken = jwt.sign({ email, code, purpose: 'password-reset', isStaff }, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '10m' });
       await this.mailerService.sendPasswordResetCodeEmail(email, code);
       return { message: 'Verification code sent successfully', resetToken };
@@ -811,7 +812,7 @@ export class AuthController {
     if (existingStaff && existingStaff.id !== me.userId) throw new BadRequestException('Email is already associated with another account');
     const { data: existingCustomer } = await this.supabaseService.supabase.from('customers').select('id').eq('email', email).maybeSingle();
     if (existingCustomer) throw new BadRequestException('Email is already registered as a customer account');
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const code = crypto.randomInt(100000, 999999).toString();
     const emailToken = jwt.sign({ staffId: me.userId, email, code, purpose: 'staff-onboarding' }, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '10m' });
     await this.mailerService.sendStaffOnboardingEmail(email, code);
     return { message: 'Verification code sent to your email', emailToken };

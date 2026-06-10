@@ -4,6 +4,7 @@ import { checkDatabaseHealth, hasDatabaseConfig } from "./lib/database.js";
 import { purchaseOrdersRouter } from "./routes/purchaseOrders.js";
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use(express.json());
 
@@ -29,7 +30,7 @@ app.get("/health", async (_req, res) => {
     database: {
       connected: database.connected,
       configured: hasDatabaseConfig,
-      message: database.message ? database.message.replace(/:[^@]*@/, ":****@") : null,
+      message: database.message ? database.message.replace(/:[^@]{0,100}@/, ":****@") : null,
     },
   });
 });

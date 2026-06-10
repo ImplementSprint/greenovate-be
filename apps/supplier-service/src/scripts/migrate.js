@@ -23,7 +23,7 @@ const run = async () => {
       "utf8",
     );
     await pool.query(sql);
-    console.log(`Applied migration: ${file}`);
+    console.log(`Applied migration: ${encodeURIComponent(file)}`);
   }
 
   await pool.end();

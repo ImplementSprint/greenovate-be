@@ -7,6 +7,7 @@ import { grnQualityChecksRouter } from "./routes/grnQualityChecks.js";
 import { shipmentsRouter } from "./routes/shipments.js";
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use(express.json({ limit: "2mb" }));
 
@@ -35,7 +36,7 @@ app.get("/health", async (_req, res) => {
     database: {
       connected: database.connected,
       configured: hasDatabaseConfig,
-      message: database.message ? database.message.replace(/:[^@]*@/, ":****@") : null,
+      message: database.message ? database.message.replace(/:[^@]{0,100}@/, ":****@") : null,
     },
   });
 });

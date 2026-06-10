@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 import { createHttpError } from "../lib/http.js";
 import { env } from "../config/env.js";
 
@@ -610,13 +611,13 @@ export const generateReport = async (options) => {
     throw createHttpError(400, "Missing required field: type");
   }
 
-  console.log(`[ReportingService] Generating ${type} report in ${format} format...`);
+  console.log(`[ReportingService] Generating ${encodeURIComponent(type)} report in ${encodeURIComponent(format)} format...`);
 
   // Simulation
   await new Promise((resolve) => setTimeout(resolve, 200));
 
   return {
-    reportId: `rep_${Math.random().toString(36).substr(2, 9)}`,
+    reportId: `rep_${crypto.randomBytes(5).toString('hex')}`,
     type,
     format,
     generatedAt: new Date().toISOString(),

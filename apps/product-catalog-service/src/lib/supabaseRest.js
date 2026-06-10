@@ -400,7 +400,7 @@ export const createProductRest = async (payload) => {
   try {
     await syncInventoryOnHandRest(productKey, Number(payload.inventory_on_hand ?? 0));
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not initialize stock for product ${productKey}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not initialize stock for product ${encodeURIComponent(productKey)}:`, error.message);
   }
 
   try {
@@ -411,7 +411,7 @@ export const createProductRest = async (payload) => {
       currency_code: payload.currency_code ?? "PHP",
     });
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not initialize pricing for product ${productKey}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not initialize pricing for product ${encodeURIComponent(productKey)}:`, error.message);
   }
 
   return mapProductRow(row);
@@ -472,7 +472,7 @@ export const updateProductRest = async (productId, payload) => {
   try {
     await syncInventoryOnHandRest(productKey, stockQty);
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not update stock for product ${productKey}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not update stock for product ${encodeURIComponent(productKey)}:`, error.message);
   }
 
   try {
@@ -490,7 +490,7 @@ export const updateProductRest = async (productId, payload) => {
           : row.currency_code,
     });
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not update pricing for product ${row.product_id}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not update pricing for product ${encodeURIComponent(row.product_id)}:`, error.message);
   }
 
   return mapProductRow({
@@ -508,7 +508,7 @@ export const deleteProductRest = async (productId) => {
   }
 
   await handleResponse(
-    await fetch(`${env.supabaseUrl}/rest/v1/products?product_id=eq.${productId}`, {
+    await fetch(`${env.supabaseUrl}/rest/v1/products?product_id=eq.${encodeURIComponent(productId)}`, {
       method: "DELETE",
       headers: {
         ...buildHeaders(),

@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 import { env } from "../config/env.js";
 import fs from "fs";
 import path from "path";
@@ -25,7 +26,7 @@ const saveLocalPayment = (payment) => {
   try {
     const list = getLocalPayments();
     const newPayment = {
-      id: crypto.randomUUID?.() || Math.random().toString(36).substring(2),
+      id: crypto.randomUUID?.() || crypto.randomBytes(5).toString('hex'),
       supplier_name: payment.supplier_name,
       amount: Number(payment.amount ?? 0),
       payment_date: payment.payment_date || new Date().toISOString().split("T")[0],
@@ -612,7 +613,7 @@ export const getInvoiceRest = async (orderId) => {
   ensureRestConfig();
 
   const response = await fetch(
-    `${retailOrdersFunctionBase()}/orders/${orderId}/invoice`,
+    `${retailOrdersFunctionBase()}/orders/${encodeURIComponent(orderId)}/invoice`,
     {
       method: "GET",
       headers: buildHeaders(false),

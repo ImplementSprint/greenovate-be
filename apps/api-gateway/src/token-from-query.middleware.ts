@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 
 /**
  * Allows passing a JWT via the query string for quick mobile testing.
- * Example: http://<ip>:3041/orders/my?access_token=eyJhbGciOi...
+ * Example: https://<ip>:3041/orders/my?access_token=eyJhbGciOi...
  * The middleware copies the token to the Authorization header so existing
  * guards and services continue to work unchanged.
  */

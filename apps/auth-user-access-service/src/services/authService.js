@@ -32,7 +32,7 @@ export const validateUserSession = async (token) => {
     throw createHttpError(401, "Token is required");
   }
 
-  console.log(`[AuthService] Validating session for token: ${token.substring(0, 8)}...`);
+  console.log(`[AuthService] Validating session for token: ${encodeURIComponent(token.substring(0, 8))}...`);
 
   // Simulation
   await new Promise((resolve) => setTimeout(resolve, 100));

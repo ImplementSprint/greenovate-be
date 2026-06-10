@@ -2,7 +2,8 @@ FROM node:20-alpine
 WORKDIR /app
 COPY --chown=root:root --chmod=0755 package*.json ./
 RUN npm ci --ignore-scripts --omit=dev
-COPY --chown=root:root --chmod=0755 . .
+COPY --chown=root:root --chmod=0755 src ./src
+COPY --chown=root:root --chmod=0755 sql ./sql
 USER node
 ENV NODE_ENV=production
 EXPOSE 4001
