@@ -138,62 +138,62 @@ describe('corsOptions', () => {
   }
 
   it('allows a whitelisted origin', async () => {
-    const opts = corsOptions('http://localhost:5173,https://app.example.com');
-    const result = await resolveOrigin(opts, 'http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173,https://app.example.com');
+    const result = await resolveOrigin(opts, 'https://localhost:5173');
     expect(result).toBe(true);
   });
 
   it('allows a second whitelisted origin', async () => {
-    const opts = corsOptions('http://localhost:5173,https://app.example.com');
+    const opts = corsOptions('https://localhost:5173,https://app.example.com');
     const result = await resolveOrigin(opts, 'https://app.example.com');
     expect(result).toBe(true);
   });
 
   it('rejects an origin not in the whitelist', async () => {
-    const opts = corsOptions('http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173');
     const result = await resolveOrigin(opts, 'https://evil.example.com');
     expect(result).toBeInstanceOf(Error);
     expect((result as Error).message).toMatch(/not allowed/);
   });
 
   it('allows requests with no origin (server-to-server / health probes)', async () => {
-    const opts = corsOptions('http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173');
     const result = await resolveOrigin(opts, undefined);
     expect(result).toBe(true);
   });
 
   it('rejects all origins when allowedOriginsEnv is empty string', async () => {
     const opts = corsOptions('');
-    const result = await resolveOrigin(opts, 'http://localhost:5173');
+    const result = await resolveOrigin(opts, 'https://localhost:5173');
     expect(result).toBeInstanceOf(Error);
   });
 
   it('rejects all browser origins when allowedOriginsEnv is undefined', async () => {
     const opts = corsOptions(undefined);
-    const result = await resolveOrigin(opts, 'http://localhost:5173');
+    const result = await resolveOrigin(opts, 'https://localhost:5173');
     expect(result).toBeInstanceOf(Error);
   });
 
   it('trims whitespace around origin entries', async () => {
     const opts = corsOptions(
-      '  http://localhost:5173  ,  https://app.example.com  ',
+      '  https://localhost:5173  ,  https://app.example.com  ',
     );
-    const result = await resolveOrigin(opts, 'http://localhost:5173');
+    const result = await resolveOrigin(opts, 'https://localhost:5173');
     expect(result).toBe(true);
   });
 
   it('includes credentials: true', () => {
-    const opts = corsOptions('http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173');
     expect(opts.credentials).toBe(true);
   });
 
   it('exposes X-Request-Id header', () => {
-    const opts = corsOptions('http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173');
     expect(opts.exposedHeaders).toContain('X-Request-Id');
   });
 
   it('includes standard HTTP methods', () => {
-    const opts = corsOptions('http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173');
     const methods = opts.methods as string[];
     expect(methods).toContain('GET');
     expect(methods).toContain('POST');
@@ -202,13 +202,13 @@ describe('corsOptions', () => {
   });
 
   it('includes Authorization in allowedHeaders', () => {
-    const opts = corsOptions('http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173');
     const headers = opts.allowedHeaders as string[];
     expect(headers).toContain('Authorization');
   });
 
   it('sets maxAge to 86400 (24h preflight cache)', () => {
-    const opts = corsOptions('http://localhost:5173');
+    const opts = corsOptions('https://localhost:5173');
     expect(opts.maxAge).toBe(86400);
   });
 
