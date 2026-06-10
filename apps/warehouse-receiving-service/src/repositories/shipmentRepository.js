@@ -112,7 +112,7 @@ export const updateShipmentStatus = async ({ id, status, receivedBy, notes }) =>
   const updatedAt = new Date().toISOString();
 
   if (!pool) {
-    console.log('[SUPABASE] Updating shipment status in Supabase:', id, status);
+    console.log('[SUPABASE] Updating shipment status in Supabase:', id, String(status).replace(/[\r\n]/g, ''));
     const updateObj = { status };
 
     const { data, error } = await supabaseFulfillment
