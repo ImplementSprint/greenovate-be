@@ -19,6 +19,7 @@ describe('PromosService', () => {
       eq: jest.fn().mockReturnThis(),
       update: jest.fn().mockReturnThis(),
       maybeSingle: jest.fn().mockResolvedValue({ data: makePromoData(), error: null }),
+      then: jest.fn((resolve) => resolve({ error: null })),
     };
 
     const mockSupabaseService = {
@@ -135,7 +136,7 @@ describe('PromosService', () => {
     it('should increment promo usage count', async () => {
       mockDb.maybeSingle.mockResolvedValueOnce({ data: { id: 1, times_used: 3 }, error: null });
       mockDb.update.mockReturnThis();
-      mockDb.eq.mockResolvedValueOnce({ error: null });
+      // The awaited update().eq() will use mockDb.then() which resolves to { error: null }
       await expect(service.incrementPromoUsage(1)).resolves.not.toThrow();
     });
 
