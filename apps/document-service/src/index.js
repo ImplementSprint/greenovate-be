@@ -6,7 +6,7 @@ import { documentsRouter } from "./routes/documents.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: (origin, callback) => { const allowedOrigins = process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : []; if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) { callback(null, true); } else { callback(new Error('Not allowed by CORS')); } } }));
 app.use(express.json({ limit: "10mb" }));
 
 app.get("/health", async (_req, res) => {

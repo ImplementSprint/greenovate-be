@@ -19,7 +19,6 @@ describe('PromosService', () => {
       eq: jest.fn().mockReturnThis(),
       update: jest.fn().mockReturnThis(),
       maybeSingle: jest.fn().mockResolvedValue({ data: makePromoData(), error: null }),
-      then: jest.fn((resolve) => resolve({ error: null })),
     };
 
     const mockSupabaseService = {

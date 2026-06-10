@@ -2,10 +2,10 @@
 
 WORKDIR /usr/src/app
 
-COPY --chmod=0755 package*.json ./
-RUN npm install --ignore-scripts
+COPY --chown=root:root --chmod=0755 package*.json ./
+RUN npm ci --ignore-scripts
 
-COPY --chmod=0755 --chown=node:node . .
+COPY --chown=root:root --chmod=0755 . .
 RUN npm run build
 
 EXPOSE 4105
