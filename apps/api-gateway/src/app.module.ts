@@ -1,8 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProxyMiddleware, ProtectedProxyMiddleware, FrontendProxyMiddleware } from './proxy.middleware';
+import { StaticController } from './static/static.controller';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
@@ -14,6 +16,8 @@ export class AppModule implements NestModule {
     consumer
       .apply(ProxyMiddleware)
       .forRoutes({ path: 'api/auth/*path', method: RequestMethod.ALL });
+
+
 
     consumer
       .apply(ProtectedProxyMiddleware)
