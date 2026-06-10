@@ -154,7 +154,7 @@ export const getAuthUserById = async (userId) => {
     return null;
   }
 
-  const response = await fetch(`${env.supabaseUrl}/auth/v1/admin/users/${userId}`, {
+  const response = await fetch(`${env.supabaseUrl}/auth/v1/admin/users/${encodeURIComponent(userId)}`, {
     method: "GET",
     headers: buildHeaders(),
   });

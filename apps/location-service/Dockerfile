@@ -3,13 +3,13 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY --chmod=0755 package*.json .npmrc ./
+COPY --chown=root:root --chmod=0755 package*.json .npmrc ./
 RUN --mount=type=secret,id=GITHUB_TOKEN \
   GITHUB_TOKEN="$(cat /run/secrets/GITHUB_TOKEN)" npm ci --ignore-scripts
 
-COPY --chmod=0755 tsconfig*.json nest-cli.json ./
-COPY --chmod=0755 apps ./apps
-COPY --chmod=0755 libs ./libs
+COPY --chown=root:root --chmod=0755 tsconfig*.json nest-cli.json ./
+COPY --chown=root:root --chmod=0755 apps ./apps
+COPY --chown=root:root --chmod=0755 libs ./libs
 
 RUN npm run build:location-service
 
@@ -18,7 +18,7 @@ FROM node:22-alpine AS runner
 ENV NODE_ENV=production
 WORKDIR /app
 
-COPY --chmod=0755 package*.json .npmrc ./
+COPY --chown=root:root --chmod=0755 package*.json .npmrc ./
 RUN --mount=type=secret,id=GITHUB_TOKEN \
   apk upgrade --no-cache zlib \
   && GITHUB_TOKEN="$(cat /run/secrets/GITHUB_TOKEN)" npm ci --ignore-scripts --omit=dev \
@@ -26,7 +26,7 @@ RUN --mount=type=secret,id=GITHUB_TOKEN \
   && addgroup --system --gid 1001 nodejs \
   && adduser --system --uid 1001 nestjs
 
-COPY --chmod=0755 --chown=nestjs:nodejs --from=builder /app/dist ./dist
+COPY --chown=root:root --chmod=0755 --from=builder /app/dist ./dist
 
 USER nestjs
 
