@@ -611,7 +611,7 @@ export const generateReport = async (options) => {
     throw createHttpError(400, "Missing required field: type");
   }
 
-  console.log(`[ReportingService] Generating ${encodeURIComponent(type)} report in ${encodeURIComponent(format)} format...`);
+  console.log(`[ReportingService] Generating ${String(type).replace(/[\r\n]/g, '')} report in ${String(format).replace(/[\r\n]/g, '')} format...`);
 
   // Simulation
   await new Promise((resolve) => setTimeout(resolve, 200));
@@ -677,7 +677,7 @@ export const getDashboardData = async () => {
 
   const supplierScorecardResults = await Promise.all(
     supplierNames.map((supplierName) =>
-      fetchJson(`${env.supplierServiceUrl}/supplier-scorecards?supplier_name=${encodeURIComponent(supplierName)}`, `supplier-scorecard:${supplierName}`),
+      fetchJson(`${env.supplierServiceUrl}/supplier-scorecards?supplier_name=${String(supplierName).replace(/[\r\n]/g, '')}`, `supplier-scorecard:${supplierName}`),
     ),
   );
 

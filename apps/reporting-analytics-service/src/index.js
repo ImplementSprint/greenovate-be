@@ -30,7 +30,8 @@ app.use((error, _req, res, _next) => {
   const status = error.status || 500;
   const message = error.message || "Internal server error";
 
-  console.error(`[Reporting Error] ${encodeURIComponent(status)} - ${encodeURIComponent(message)}`, error.details || "");
+  const safeMsg = String(message).replace(/[\r\n]/g, '');
+  console.error(`[Reporting Error] ${status} - ${safeMsg}`, error.details || "");
 
   res.status(status).json({
     error: message,

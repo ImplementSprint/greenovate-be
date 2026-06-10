@@ -250,7 +250,7 @@ export function createServer() {
 
   async function buildPreview(body: AnyRecord) {
     try {
-      const response = await fetch(`${config.memberServiceUrl.replace(/\/+$/, "")}/members?limit=5000`, {
+      const response = await fetch(`${config.memberServiceUrl.endsWith("/") ? config.memberServiceUrl.slice(0, -1) : config.memberServiceUrl}/members?limit=5000`, {
         headers: { accept: "application/json" },
       });
       const payload = await response.json().catch(() => ({}));

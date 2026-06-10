@@ -10,7 +10,9 @@ app.disable('x-powered-by');
 app.use(express.json({ limit: "2mb" }));
 
 app.use((req, res, next) => {
-  console.log(`[${encodeURIComponent(new Date().toISOString())}] ${encodeURIComponent(req.method)} ${encodeURIComponent(req.url)}`);
+  const safeMethod = String(req.method).replace(/[\r\n]/g, '');
+  const safeUrl = String(req.url).replace(/[\r\n]/g, '');
+  console.log(`[${new Date().toISOString()}] ${safeMethod} ${safeUrl}`);
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader(
@@ -47,7 +49,8 @@ app.use((error, _req, res, _next) => {
   const status = error.status || 500;
   const message = error.message || "Internal server error";
 
-  console.error(`[ERROR] ${encodeURIComponent(status)} - ${encodeURIComponent(message)}`);
+  const safeMsg = String(message).replace(/[\r\n]/g, '');
+  console.error(`[ERROR] ${status} - ${safeMsg}`);
   if (error.stack) console.error(error.stack);
 
   res.status(status).json({

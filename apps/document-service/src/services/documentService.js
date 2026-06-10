@@ -8,7 +8,7 @@ export const uploadDocument = async (payload) => {
     throw createHttpError(400, "Missing required fields: fileName, content");
   }
 
-  console.log(`[DocumentService] Uploading document: ${encodeURIComponent(fileName)} (${encodeURIComponent(mimeType || "unknown")})...`);
+  console.log(`[DocumentService] Uploading document: ${String(fileName).replace(/[\r\n]/g, '')} (${String(mimeType || "unknown").replace(/[\r\n]/g, '')})...`);
 
   // Simulation
   await new Promise((resolve) => setTimeout(resolve, 150));

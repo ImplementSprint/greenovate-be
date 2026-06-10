@@ -218,7 +218,7 @@ export const listInventoryValueTotalRest = async () => {
 
     return rows?.[0]?.total_inventory_value_php ?? null;
   } catch (error) {
-    console.warn("View v_total_inventory_value_php not found or failed, falling back to in-memory aggregation.", error.message);
+    console.warn("View v_total_inventory_value_php not found or failed, falling back to in-memory aggregation.", String(error.message).replace(/[\r\n]/g, ''));
     try {
       const [products, inventory] = await Promise.all([
         handleResponse(
@@ -270,7 +270,7 @@ export const listInventoryValueByCategoryRest = async () => {
       ),
     );
   } catch (error) {
-    console.warn("View v_inventory_value_by_category_php not found or failed, falling back to in-memory aggregation.", error.message);
+    console.warn("View v_inventory_value_by_category_php not found or failed, falling back to in-memory aggregation.", String(error.message).replace(/[\r\n]/g, ''));
     try {
       const [products, inventory] = await Promise.all([
         handleResponse(

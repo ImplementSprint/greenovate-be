@@ -88,7 +88,7 @@ function duplicateRecord(error: unknown) {
 }
 
 function pointsUrl(path: string) {
-  return `${config.pointsServiceUrl.replace(/\/+$/, "")}${path}`;
+  return `${config.pointsServiceUrl.endsWith("/") ? config.pointsServiceUrl.slice(0, -1) : config.pointsServiceUrl}${path}`;
 }
 
 function requestError(message: string, statusCode: number) {

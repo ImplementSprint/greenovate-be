@@ -8,9 +8,9 @@ export const sendNotification = async (payload) => {
     throw createHttpError(400, "Missing required fields: type, to, body");
   }
 
-  console.log(`[NotificationService] Sending ${encodeURIComponent(type)} to ${encodeURIComponent(to)}...`);
-  console.log(`[NotificationService] Subject: ${encodeURIComponent(subject || "N/A")}`);
-  console.log(`[NotificationService] Body: ${encodeURIComponent(body)}`);
+  console.log(`[NotificationService] Sending ${String(type).replace(/[\r\n]/g, '')} to ${String(to).replace(/[\r\n]/g, '')}...`);
+  console.log(`[NotificationService] Subject: ${String(subject || "N/A").replace(/[\r\n]/g, '')}`);
+  console.log(`[NotificationService] Body: ${String(body).replace(/[\r\n]/g, '')}`);
 
   // Simulation of sending
   await new Promise((resolve) => setTimeout(resolve, 100));

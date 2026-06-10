@@ -1,4 +1,4 @@
-﻿import locationsPackage from 'ph-locations';
+import locationsPackage from 'ph-locations';
 
 type ProvinceRecord = {
   code: string;
@@ -31,10 +31,10 @@ const normalizeKey = (value?: string) =>
 
 const normalizeLocationName = (value?: string) =>
   normalizeKey(value)
-    .replace(/^city of\s+/i, '')
-    .replace(/^municipality of\s+/i, '')
-    .replace(/\s+city$/i, '')
-    .replace(/\s+municipality$/i, '');
+    .replace(/^city of /i, '')
+    .replace(/^municipality of /i, '')
+    .replace(/ city$/i, '')
+    .replace(/ municipality$/i, '');
 
 const provinceRecords = [...psgc.provinces].sort((left, right) =>
   collator.compare(left.name, right.name),
