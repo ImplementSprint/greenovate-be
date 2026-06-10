@@ -400,7 +400,7 @@ export const createProductRest = async (payload) => {
   try {
     await syncInventoryOnHandRest(productKey, Number(payload.inventory_on_hand ?? 0));
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not initialize stock for product ${encodeURIComponent(productKey)}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not initialize stock for product ${encodeURIComponent(productKey)}:`, String(error.message).replace(/[\r\n]/g, ''));
   }
 
   try {
@@ -411,7 +411,7 @@ export const createProductRest = async (payload) => {
       currency_code: payload.currency_code ?? "PHP",
     });
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not initialize pricing for product ${encodeURIComponent(productKey)}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not initialize pricing for product ${encodeURIComponent(productKey)}:`, String(error.message).replace(/[\r\n]/g, ''));
   }
 
   return mapProductRow(row);
@@ -472,7 +472,7 @@ export const updateProductRest = async (productId, payload) => {
   try {
     await syncInventoryOnHandRest(productKey, stockQty);
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not update stock for product ${encodeURIComponent(productKey)}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not update stock for product ${encodeURIComponent(productKey)}:`, String(error.message).replace(/[\r\n]/g, ''));
   }
 
   try {
@@ -490,7 +490,7 @@ export const updateProductRest = async (productId, payload) => {
           : row.currency_code,
     });
   } catch (error) {
-    console.warn(`[SYNC WARNING] Could not update pricing for product ${encodeURIComponent(row.product_id)}:`, error.message);
+    console.warn(`[SYNC WARNING] Could not update pricing for product ${encodeURIComponent(row.product_id)}:`, String(error.message).replace(/[\r\n]/g, ''));
   }
 
   return mapProductRow({

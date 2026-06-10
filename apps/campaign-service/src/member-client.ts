@@ -1,7 +1,7 @@
 import { config } from "./config.js";
 
 function memberServiceUrl(path: string) {
-  return `${config.memberServiceUrl.replace(/\/+$/, "")}${path}`;
+  return `${config.memberServiceUrl.endsWith("/") ? config.memberServiceUrl.slice(0, -1) : config.memberServiceUrl}${path}`;
 }
 
 export async function findMemberIdViaMemberService(memberIdentifier: string, fallbackEmail?: string): Promise<number | null> {

@@ -2,7 +2,7 @@ import { config } from "./config.js";
 import type { Member, SupportedTier } from "./core/types.js";
 
 function memberServiceUrl(path: string) {
-  return `${config.memberServiceUrl.replace(/\/+$/, "")}${path}`;
+  return `${config.memberServiceUrl.endsWith("/") ? config.memberServiceUrl.slice(0, -1) : config.memberServiceUrl}${path}`;
 }
 
 function mapMember(row: any): Member {

@@ -365,7 +365,7 @@ export const createPurchaseOrder = async (payload) => {
     } catch (error) {
       if (isDuplicatePoNumber(error) && attempt < MAX_RETRIES) {
         console.warn(
-          `[procurement] PO number conflict on attempt ${attempt} (${resolvedPayload.po_no}), retrying...`,
+          `[procurement] PO number conflict on attempt ${attempt} (${String(resolvedPayload.po_no).replace(/[\r\n]/g, '')}), retrying...`,
         );
         continue;
       }

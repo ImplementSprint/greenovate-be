@@ -1,6 +1,6 @@
 import { createHttpError } from "./http.js";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@.]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[0-9+()\-\s]+$/;
 const CURRENCY_CODE_REGEX = /^[A-Z]{3}$/;
 

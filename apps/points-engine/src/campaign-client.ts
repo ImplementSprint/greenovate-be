@@ -5,7 +5,7 @@ const BASE_URL =
   config.campaignServiceUrl;
 
 function fullUrl(path: string) {
-  return `${BASE_URL.replace(/\/+$/, "")}${path}`;
+  return `${BASE_URL.endsWith("/") ? BASE_URL.slice(0, -1) : BASE_URL}${path}`;
 }
 
 export async function fetchActiveMultiplier(payload: {

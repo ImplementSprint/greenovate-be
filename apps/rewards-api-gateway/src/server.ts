@@ -4,7 +4,7 @@ import { config } from "./config.js";
 import { checkRateLimit } from "./rate-limit.js";
 
 function buildTarget(base: string, path: string) {
-  return `${base.replace(/\/+$/, "")}${path}`;
+  return `${base.endsWith("/") ? base.slice(0, -1) : base}${path}`;
 }
 
 function dependencies() {

@@ -17,7 +17,7 @@ export const getShipmentByTracking = async (trackingOrId) => {
   const isUuid = isValidUuid(trackingOrId);
 
   if (!pool) {
-    console.log('[SUPABASE] Querying shipment by tracking/ID:', encodeURIComponent(trackingOrId));
+    console.log('[SUPABASE] Querying shipment by tracking/ID:', String(trackingOrId).replace(/[\r\n]/g, ''));
     const query = supabaseFulfillment.from('shipments').select('*');
     if (isUuid) {
       query.eq('shipment_id', trackingOrId);
@@ -27,7 +27,7 @@ export const getShipmentByTracking = async (trackingOrId) => {
 
     const { data, error } = await query.maybeSingle();
     if (error) {
-      console.error('[SUPABASE] getShipmentByTracking error:', error);
+      console.error('[SUPABASE] getShipmentByTracking error:', error.message ? String(error.message).replace(/[\r\n]/g, '') : error);
       throw error;
     }
     if (!data) return null;
@@ -58,7 +58,7 @@ export const getPendingShipments = async () => {
       .in('status', ['pending', 'initialized', 'handed_to_freight'])
       .order('created_at', { ascending: true });
     if (error) {
-      console.error('[SUPABASE] getPendingShipments error:', error);
+      console.error('[SUPABASE] getPendingShipments error:', error.message ? String(error.message).replace(/[\r\n]/g, '') : error);
       throw error;
     }
     return (data || []).map(d => ({ id: d.shipment_id, tracking_number: d.tracking_number || d.shipment_id, ...d }));
@@ -86,7 +86,7 @@ export const getTodayReceivedCount = async () => {
       .gte('created_at', `${today}T00:00:00`)
       .lt('created_at', `${today}T23:59:59`);
     if (error) {
-      console.error('[SUPABASE] getTodayReceivedCount error:', error);
+      console.error('[SUPABASE] getTodayReceivedCount error:', error.message ? String(error.message).replace(/[\r\n]/g, '') : error);
       throw error;
     }
     return data ? data.length : 0;
@@ -104,7 +104,7 @@ export const getTodayReceivedCount = async () => {
  */
 export const updateShipmentStatus = async ({ id, status, receivedBy, notes }) => {
   if (!isValidUuid(id)) {
-    console.log('[REPO] updateShipmentStatus: Invalid UUID format, returning null directly:', encodeURIComponent(id));
+    console.log('[REPO] updateShipmentStatus: Invalid UUID format, returning null directly:', String(id).replace(/[\r\n]/g, ''));
     return null;
   }
 
@@ -122,7 +122,7 @@ export const updateShipmentStatus = async ({ id, status, receivedBy, notes }) =>
       .select()
       .maybeSingle();
     if (error) {
-      console.error('[SUPABASE] updateShipmentStatus error:', error);
+      console.error('[SUPABASE] updateShipmentStatus error:', error.message ? String(error.message).replace(/[\r\n]/g, '') : error);
       throw error;
     }
     if (!data) return null;

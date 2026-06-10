@@ -3,7 +3,7 @@
 FROM node:22-slim AS base
 WORKDIR /app
 
-COPY --chown=root:root --chmod=0755 package.json package-lock.json* ./
+COPY --chown=root:root --chmod=0755 package.json package-lock.json ./
 RUN npm ci --ignore-scripts --production=false
 
 COPY --chown=root:root --chmod=0755 tsconfig.json ./tsconfig.json
