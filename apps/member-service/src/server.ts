@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import Fastify from "fastify";
 import { randomUUID } from "node:crypto";
 import { pathToFileURL } from "node:url";
@@ -436,7 +437,7 @@ function profilePayload(body: z.infer<typeof profileSchema> | z.infer<typeof pro
 
 function createMemberNumber() {
   const timestampPart = String(Date.now()).slice(-10);
-  const randomPart = String(Math.floor(Math.random() * 100)).padStart(2, "0");
+  const randomPart = String(crypto.randomInt(0, 100)).padStart(2, "0");
   return `MEM-${timestampPart}${randomPart}`;
 }
 

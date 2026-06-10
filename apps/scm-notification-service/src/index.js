@@ -5,6 +5,7 @@ import { checkDatabaseHealth, hasDatabaseConfig } from "./lib/database.js";
 import { notificationsRouter } from "./routes/notifications.js";
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use(cors({ origin: (origin, callback) => { const allowedOrigins = process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : []; if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) { callback(null, true); } else { callback(new Error('Not allowed by CORS')); } } }));
 app.use(express.json({ limit: "1mb" }));
@@ -18,7 +19,7 @@ app.get("/health", async (_req, res) => {
     database: {
       connected: database.connected,
       configured: hasDatabaseConfig,
-      message: database.message ? database.message.replace(/:[^@]*@/, ":****@") : null,
+      message: database.message ? database.message.replace(/:[^@]{0,100}@/, ":****@") : null,
     },
   });
 });
@@ -29,7 +30,7 @@ app.use((error, _req, res, _next) => {
   const status = error.status || 500;
   const message = error.message || "Internal server error";
 
-  console.error(`[Error] ${status} - ${message}`, error.details || "");
+  console.error(`[Error] ${encodeURIComponent(status)} - ${encodeURIComponent(message)}`, error.details || "");
 
   res.status(status).json({
     error: message,

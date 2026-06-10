@@ -5,11 +5,12 @@ import { grnQualityChecksRouter } from "./routes/grnQualityChecks.js";
 import { shipmentDiscrepanciesRouter } from "./routes/shipmentDiscrepancies.js";
 
 const app = express();
+app.disable('x-powered-by');
 
 app.use(express.json({ limit: "2mb" }));
 
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log(`[${encodeURIComponent(new Date().toISOString())}] ${encodeURIComponent(req.method)} ${encodeURIComponent(req.url)}`);
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader(
@@ -34,7 +35,7 @@ app.get("/health", async (_req, res) => {
     database: {
       connected: database.connected,
       configured: hasDatabaseConfig,
-      message: database.message ? database.message.replace(/:[^@]*@/, ":****@") : null,
+      message: database.message ? database.message.replace(/:[^@]{0,100}@/, ":****@") : null,
     },
   });
 });
@@ -46,7 +47,7 @@ app.use((error, _req, res, _next) => {
   const status = error.status || 500;
   const message = error.message || "Internal server error";
 
-  console.error(`[ERROR] ${status} - ${message}`);
+  console.error(`[ERROR] ${encodeURIComponent(status)} - ${encodeURIComponent(message)}`);
   if (error.stack) console.error(error.stack);
 
   res.status(status).json({

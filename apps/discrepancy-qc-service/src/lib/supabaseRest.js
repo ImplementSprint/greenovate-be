@@ -134,10 +134,13 @@ export const resolveDiscrepancyRest = async (id, disposition, resolvedBy = "qc_i
   }
 
   // Fetch the updated row to return it
-  const response = await fetch(`${env.supabaseUrl}/rest/v1/shipment_discrepancies?id=eq.${id}`, {
-    method: "GET",
-    headers: buildHeaders(),
-  });
+  const response = await fetch(
+    `${env.supabaseUrl}/rest/v1/shipment_discrepancies?id=eq.${encodeURIComponent(id)}`,
+    {
+      method: "GET",
+      headers: buildHeaders(),
+    },
+  );
   const data = await handleResponse(response);
   return data[0] ?? null;
 };

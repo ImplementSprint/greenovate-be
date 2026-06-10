@@ -17,7 +17,7 @@ export const getShipmentByTracking = async (trackingOrId) => {
   const isUuid = isValidUuid(trackingOrId);
 
   if (!pool) {
-    console.log('[SUPABASE] Querying shipment by tracking/ID:', trackingOrId);
+    console.log('[SUPABASE] Querying shipment by tracking/ID:', encodeURIComponent(trackingOrId));
     const query = supabaseFulfillment.from('shipments').select('*');
     if (isUuid) {
       query.eq('shipment_id', trackingOrId);
@@ -104,7 +104,7 @@ export const getTodayReceivedCount = async () => {
  */
 export const updateShipmentStatus = async ({ id, status, receivedBy, notes }) => {
   if (!isValidUuid(id)) {
-    console.log('[REPO] updateShipmentStatus: Invalid UUID format, returning null directly:', id);
+    console.log('[REPO] updateShipmentStatus: Invalid UUID format, returning null directly:', encodeURIComponent(id));
     return null;
   }
 

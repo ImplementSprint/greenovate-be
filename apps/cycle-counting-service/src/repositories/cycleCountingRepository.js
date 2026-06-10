@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 import { hasSupabaseRestConfig } from "../lib/database.js";
 import { createHttpError } from "../lib/http.js";
 import { addRecentCount, listRecentCounts } from "../lib/memoryStore.js";
@@ -25,7 +26,7 @@ const buildCountRecord = ({
   created_by,
   import_source,
 }) => ({
-  id: `count-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+  id: `count-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`,
   product_id,
   sku,
   product_name,
