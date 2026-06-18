@@ -30,6 +30,9 @@ export class ProxyMiddleware implements NestMiddleware {
 export class ProtectedProxyMiddleware implements NestMiddleware {
   private supabase: any;
   private proxies: Record<string, any>;
+  private readonly ALLOWED_SERVICES = new Set([
+    'products', 'stock', 'transactions', 'reporting', 'roles', 'receipts',
+  ]);
   private logger = new Logger('ProtectedProxyMiddleware');
 
   constructor() {
@@ -78,7 +81,7 @@ export class ProtectedProxyMiddleware implements NestMiddleware {
     // e.g. /api/products/... -> pathSegments = ['', 'api', 'products', ...]
     if (pathSegments.length > 2 && pathSegments[1] === 'api') {
       const service = pathSegments[2];
-      if (this.proxies[service]) {
+      if (this.ALLOWED_SERVICES.has(service) && Object.hasOwn(this.proxies, service)) {
         return this.proxies[service](req, res, next);
       }
     }

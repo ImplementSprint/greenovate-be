@@ -693,7 +693,7 @@ export const listOrderPaymentsRest = async ({ retailerName, orderNo, orderTotal 
 
 const checkAndUpdateOrderStatus = async (notes) => {
   try {
-    const noteStr = String(notes || "").toLowerCase();
+    const noteStr = String(notes || "").toLowerCase().slice(0, 500);
     const match = noteStr.match(/\[invoice:([^\]]+)\]/);
     if (!match || !match[1]) return;
     const orderNo = match[1].trim();
