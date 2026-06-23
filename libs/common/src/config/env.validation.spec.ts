@@ -39,7 +39,7 @@ describe('validateEnv', () => {
       const result = validateEnv(
         validEnv({
           NODE_ENV: 'production',
-          API_CENTER_BASE_URL: 'http://api-center.local',
+          API_CENTER_BASE_URL: 'https://api-center.local',
           API_CENTER_TRIBE_ID: 'tribe-a',
           API_CENTER_TRIBE_SECRET: 'tribe-secret',
         }),
@@ -54,15 +54,15 @@ describe('validateEnv', () => {
 
     it('includes optional API_CENTER_BASE_URL when provided', () => {
       const result = validateEnv(
-        validEnv({ API_CENTER_BASE_URL: 'http://api-center.local' }),
+        validEnv({ API_CENTER_BASE_URL: 'https://api-center.local' }),
       );
-      expect(result.API_CENTER_BASE_URL).toBe('http://api-center.local');
+      expect(result.API_CENTER_BASE_URL).toBe('https://api-center.local');
     });
 
     it('includes optional API_CENTER_API_KEY when provided', () => {
       const result = validateEnv(
         validEnv({
-          API_CENTER_BASE_URL: 'http://api-center.local',
+          API_CENTER_BASE_URL: 'https://api-center.local',
           API_CENTER_API_KEY: 'secret-key',
         }),
       );
@@ -89,14 +89,14 @@ describe('validateEnv', () => {
     it('accepts APICENTER_* aliases', () => {
       const result = validateEnv(
         validEnv({
-          APICENTER_URL: 'http://api-center.local',
+          APICENTER_URL: 'https://api-center.local',
           APICENTER_TRIBE_ID: 'tribe-a',
           APICENTER_TRIBE_SECRET: 'tribe-secret',
           APICENTER_TIMEOUT_MS: '5000',
         }),
       );
 
-      expect(result.API_CENTER_BASE_URL).toBe('http://api-center.local');
+      expect(result.API_CENTER_BASE_URL).toBe('https://api-center.local');
       expect(result.API_CENTER_TRIBE_ID).toBe('tribe-a');
       expect(result.API_CENTER_TRIBE_SECRET).toBe('tribe-secret');
       expect(result.API_CENTER_TIMEOUT_MS).toBe('5000');
@@ -240,14 +240,14 @@ describe('validateEnv', () => {
     it('does not throw when API_CENTER_API_KEY is missing', () => {
       expect(() =>
         validateEnv(
-          validEnv({ API_CENTER_BASE_URL: 'http://api-center.local' }),
+          validEnv({ API_CENTER_BASE_URL: 'https://api-center.local' }),
         ),
       ).not.toThrow();
     });
 
     it('does not throw when only APICENTER_URL alias is set', () => {
       expect(() =>
-        validateEnv(validEnv({ APICENTER_URL: 'http://api-center.local' })),
+        validateEnv(validEnv({ APICENTER_URL: 'https://api-center.local' })),
       ).not.toThrow();
     });
 
@@ -282,7 +282,7 @@ describe('validateEnv', () => {
         validateEnv(
           validEnv({
             NODE_ENV: 'production',
-            API_CENTER_BASE_URL: 'http://api-center.local',
+            API_CENTER_BASE_URL: 'https://api-center.local',
           }),
         ),
       ).toThrow(/Production APICenter auth is missing/);
@@ -293,7 +293,7 @@ describe('validateEnv', () => {
         validateEnv(
           validEnv({
             NODE_ENV: 'production',
-            API_CENTER_BASE_URL: 'http://api-center.local',
+            API_CENTER_BASE_URL: 'https://api-center.local',
             API_CENTER_TRIBE_ID: 'tribe-a',
             API_CENTER_TRIBE_SECRET: 'tribe-secret',
           }),
